@@ -6,12 +6,12 @@ app.get('/', (req, res) => {
     res.send("Hello Express");
 });
 
-app.get('/movies', (req, res) => {
-    res.send("Movies");
-});
-
-app.get('/movie/year', (req, res) => {
-    
+//dynemic routing
+// /movie/comedy/year/2012
+// /movie/action/year/2020
+app.get('/movie/:genre/year/:year', (req, res) => {
+    console.log(req.params.genre)
+    res.send("Movies Route");
 });
 
 app.listen(PORT, () => {
