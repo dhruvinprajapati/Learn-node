@@ -13,6 +13,7 @@ app.get('/users', (req, res) => {
         {name:"Kishor",age:23},
         {name:"bhavin",age:24}
     ]
+    users = []
     res.render('users',{users:users});
 });
 

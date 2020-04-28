@@ -9,7 +9,12 @@
     <h1>my name is </h1>
 
     {{#users}}
-        {{name}}{{age}}
+    <li>
+        {{name}}-{{age}}
+    </li>
+    {{/users}}
+    {{^users}}
+        Users Does Not exits
     {{/users}}
 </body>
 </html>
