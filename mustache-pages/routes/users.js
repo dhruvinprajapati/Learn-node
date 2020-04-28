@@ -4,7 +4,7 @@ const router = express.Router();
 router.get('/', (req, res) => {
 
     let user = {
-        name:"dhruvin",
+        name:req.session.name,
         address:{
             street:"54 kesariyaji",
             city:"ahmedabad",
@@ -22,6 +22,10 @@ router.get('/add-user', (req, res) => {
 router.post('/add-user', (req, res) => {
     let name = req.body.name
     let age = req.body.age
+    if(req.session){
+        req.session.name = name
+        req.session.age = age
+    }
     console.log(name,age)
     res.status(200).send("ok");
 });

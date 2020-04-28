@@ -1,10 +1,18 @@
 const express = require('express');
+const session = require('express-session')
 const mustacheExpress = require('mustache-express')
 const bodyParser = require('body-parser')
 const path = require('path')
 const userRoutes = require('./routes/users')
 const app = express()
 const PORT = 3000
+
+//session init
+app.use(session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true
+  }))
 
 const VIEWS_PATH = path.join(__dirname,'./views')
 
