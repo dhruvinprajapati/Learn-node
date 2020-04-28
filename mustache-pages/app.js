@@ -7,6 +7,15 @@ app.engine('mustache',mustacheExpress())
 app.set('views', './views');
 app.set('view engine', 'mustache');
 
+app.get('/users', (req, res) => {
+    let users = [
+        {name:"dhruvin",age:22},
+        {name:"Kishor",age:23},
+        {name:"bhavin",age:24}
+    ]
+    res.render('users',{users:users});
+});
+
 app.get('/', (req, res) => {
 
     let user = {
