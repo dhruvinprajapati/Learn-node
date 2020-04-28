@@ -8,7 +8,17 @@ app.set('views', './views');
 app.set('view engine', 'mustache');
 
 app.get('/', (req, res) => {
-    res.render('index');
+
+    let user = {
+        name:"dhruvin",
+        address:{
+            street:"54 kesariyaji",
+            city:"ahmedabad",
+            state:"gujrat"
+        }
+    }
+
+    res.render('index',user);
 });
 
 
