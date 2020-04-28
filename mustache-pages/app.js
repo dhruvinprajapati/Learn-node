@@ -11,6 +11,8 @@ app.engine('mustache',mustacheExpress(VIEWS_PATH+'/partials','.mustache'))
 app.set('views', VIEWS_PATH);
 app.set('view engine', 'mustache');
 app.use(bodyParser.urlencoded({extended:false}));
+//all file acc by simple type this
+app.use('/css',express.static("css"));
 
 app.get('/add-user', (req, res) => {
     res.render('add-user');
