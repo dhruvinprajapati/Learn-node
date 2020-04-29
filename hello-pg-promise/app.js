@@ -11,8 +11,18 @@ const db = pgp(connectionString)
 }).catch(error => console.log(error))*/
 
 //return id 
+/*
 db.one('INSERT INTO dishes(name,course,price,imageurl)VALUES($1,$2,$3,$4)RETURNING dishid',
 ['hot','staters',1.9,'hehe'])
 .then((data)=>{
     console.log(data)
-}).catch(error => console.log(error))
+}).catch(error => console.log(error))*/
+
+//show records
+/*
+// db.any('SELECT name,course,price,imageurl FROM dishes WHERE price > 5')
+db.any('SELECT name,course,price,imageurl FROM dishes WHERE price > $1',[5]) //more dynemic
+.then((data)=>{
+    console.log(data)
+}).catch(error => console.log(error))*/
+
