@@ -26,3 +26,10 @@ db.any('SELECT name,course,price,imageurl FROM dishes WHERE price > $1',[5]) //m
     console.log(data)
 }).catch(error => console.log(error))*/
 
+//update
+/*
+db.none('UPDATE dishes SET Price = $1 WHERE dishid =$2',[10.3,2])
+.then(()=>{
+    console.log("update")
+}).catch(error => console.log(error))*/
+
