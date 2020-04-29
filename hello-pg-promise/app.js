@@ -33,3 +33,9 @@ db.none('UPDATE dishes SET Price = $1 WHERE dishid =$2',[10.3,2])
     console.log("update")
 }).catch(error => console.log(error))*/
 
+//delete
+/*
+db.none('DELETE FROM dishes WHERE dishid =$1',[3])
+.then(()=>{
+    console.log("DELETE")
+}).catch(error => console.log(error))*/
