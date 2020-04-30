@@ -2,9 +2,12 @@ const express = require('express');
 const app = express()
 const mustacheExpress = require('mustache-express')
 const bodyParser = require('body-parser')
+const bcrypt = require('bcrypt')
 const pgp = require('pg-promise')()
+
 const PORT = 3000
 const CONNECTION_STRING = "postgres://localhost:5432/newsdb"
+const SALT_ROUND = 10
 
 //configure news engine
 app.engine('mustache',mustacheExpress())
@@ -23,9 +26,13 @@ app.post('/register', (req, res) => {
         if(data){
             res.render('register',{message:"Username alredy exist!"});
         }else{
-            db.none('INSERT INTO users(username,password)VALUES($1,$2)',[username,password])
-            .then(()=>{
-                res.send("success");
+            bcrypt.hash(password,SALT_ROUND,function(error,hash){
+                if(error == null){
+                    db.none('INSERT INTO users(username,password)VALUES($1,$2)',[username,hash])
+                    .then(()=>{
+                        res.send("success");
+                    })
+                }
             })
         }
     })
