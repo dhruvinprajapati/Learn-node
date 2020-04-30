@@ -38,6 +38,28 @@ app.post('/register', (req, res) => {
     })
 });
 
+app.get('/login', (req, res) => {
+    res.render('login');
+});
+
+app.post('/login', (req, res) => {
+    let username = req.body.username
+    let password = req.body.password
+    console.log(username,password)
+    db.oneOrNone('SELECT userid,username,password FROM users WHERE username = $1',[username])
+    .then((data)=>{
+        if(data){
+            bcrypt.compare(password,data.password,function(error,result){
+                if(result){
+                    res.send("success")
+                }
+            })
+        }else{
+            res.render('login',{message:"invalid username or password"});
+        }
+    })
+});
+
 app.get('/register', (req, res) => {
     res.render('register');
 });
