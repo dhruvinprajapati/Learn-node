@@ -3,16 +3,26 @@ const app = express()
 const mustacheExpress = require('mustache-express')
 const bodyParser = require('body-parser')
 const bcrypt = require('bcrypt')
+const session = require('express-session')
 const pgp = require('pg-promise')()
+const path = require('path')
+
+const VIEWS_PATH = path.join(__dirname,'/views')
 
 const PORT = 3000
 const CONNECTION_STRING = "postgres://localhost:5432/newsdb"
 const SALT_ROUND = 10
 
 //configure news engine
-app.engine('mustache',mustacheExpress())
-app.set('views','./views')
+app.engine('mustache',mustacheExpress(VIEWS_PATH + '/partials','.mustache'))
+app.set('views',VIEWS_PATH)
 app.set('view engine','mustache')
+
+app.use(session({
+    secret:'haha',
+    resave:false,
+    saveUninitialized:false
+}))
 
 app.use(bodyParser.urlencoded({extended: false}));
 
@@ -45,19 +55,27 @@ app.get('/login', (req, res) => {
 app.post('/login', (req, res) => {
     let username = req.body.username
     let password = req.body.password
-    console.log(username,password)
     db.oneOrNone('SELECT userid,username,password FROM users WHERE username = $1',[username])
     .then((data)=>{
         if(data){
             bcrypt.compare(password,data.password,function(error,result){
                 if(result){
-                    res.send("success")
+                    if(req.session){
+                        req.session.user = {userID:data.userid,username:data.username}
+                    }
+                     res.redirect('/users/article')
+                }else{
+                    res.render('login',{message:"invalid username or password"});
                 }
             })
         }else{
             res.render('login',{message:"invalid username or password"});
         }
     })
+});
+
+app.get('/users/article', (req, res) => {
+    res.render('article',{username:req.session.user.username})
 });
 
 app.get('/register', (req, res) => {
