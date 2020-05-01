@@ -63,7 +63,7 @@ app.post('/login', (req, res) => {
                     if(req.session){
                         req.session.user = {userID:data.userid,username:data.username}
                     }
-                     res.redirect('/users/article')
+                     res.redirect('/users/view-article')
                 }else{
                     res.render('login',{message:"invalid username or password"});
                 }
@@ -74,11 +74,17 @@ app.post('/login', (req, res) => {
     })
 });
 
-app.get('/users/article', (req, res) => {
-    res.render('article',{username:req.session.user.username})
+app.get('/users/view-article', (req, res) => {
+    let userid = req.session.user.userID
+    db.any('SELECT articleid,title,body FROM articles WHERE userid = $1',[userid])
+    .then((data)=>{
+        console.log(data)
+        res.render('article',{article:data});
+    })
 });
 
 app.get('/users/add-article', (req, res) => {
+    
     res.render('add-article');
 });
 
