@@ -78,6 +78,21 @@ app.get('/users/article', (req, res) => {
     res.render('article',{username:req.session.user.username})
 });
 
+app.get('/users/add-article', (req, res) => {
+    res.render('add-article');
+});
+
+app.post('/users/add-article', (req, res) => {
+    let title = req.body.title
+    let description = req.body.description
+    let userid = req.session.user.userid
+
+    db.none("INSERT INTO articles (title,body,userid) values($1,$2,$3)",[title,description,userid])
+    .then((data)=>{
+        res.send("success");
+    })
+});
+
 app.get('/register', (req, res) => {
     res.render('register');
 });
