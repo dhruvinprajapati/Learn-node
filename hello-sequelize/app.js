@@ -1,6 +1,16 @@
 const models = require('./models')
 
-
+//update recored
+/*
+models.Dish.update({
+    name:'panir bhurji',
+    price:44.44
+},{
+    where:{
+        id:2
+    }
+}).then(data=>console.log(data))
+*/
 //find all with where condition
 /*
 models.Dish.findAll({
