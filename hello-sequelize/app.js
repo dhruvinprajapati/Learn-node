@@ -1,5 +1,14 @@
 const models = require('./models')
 
+//delete
+/*
+models.Dish.destroy({
+    where:{
+        id:2
+    }
+})
+*/
+
 //update recored
 /*
 models.Dish.update({
